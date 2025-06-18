@@ -4,7 +4,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.delivery.db.account.AccountRepository;
+import com.delivery.api.account.model.AccountMeResponse;
 import com.delivery.db.account.AccountEntity;
+
+import java.time.LocalDateTime;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -17,9 +20,12 @@ public class AccountApiController {
 
     private final AccountRepository accountRepository;
 
-    @GetMapping("")
-    public void save() {
-        var account = AccountEntity.builder().build();
-        accountRepository.save(account);
+    @GetMapping("/me")
+    public AccountMeResponse me() {
+        return AccountMeResponse.builder()
+            .name("홍길동")
+            .email("niniz@gmail.com")
+            .registeredAt(LocalDateTime.now())
+            .build();
     }
 }
