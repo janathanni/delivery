@@ -21,13 +21,16 @@ import lombok.RequiredArgsConstructor;
 public class AccountApiController {
 
     @GetMapping("/me")
-    public Api<Object> me() {
+    public Api<AccountMeResponse> me() {
         var response =  AccountMeResponse.builder()
                                          .name("홍길동")
                                          .email("niniz@gmail.com")
                                          .registeredAt(LocalDateTime.now())
                                          .build();
         
-        return Api.ERROR(UserErrorCode.USER_NOT_FOUND, "홍길동 이라는 사용자 없음.");
+        var str = "안녕하세요";
+        var age = Integer.parseInt(str);
+
+        return Api.OK(response);
     }
 }
