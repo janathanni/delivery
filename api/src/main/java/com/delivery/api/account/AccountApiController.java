@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.delivery.db.account.AccountRepository;
 import com.delivery.api.account.model.AccountMeResponse;
 import com.delivery.db.account.AccountEntity;
+import com.delivery.api.common.api.Api;
+import com.delivery.api.common.error.UserErrorCode;
 
 import java.time.LocalDateTime;
 
@@ -18,14 +20,14 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/account")
 public class AccountApiController {
 
-    private final AccountRepository accountRepository;
-
     @GetMapping("/me")
-    public AccountMeResponse me() {
-        return AccountMeResponse.builder()
-            .name("홍길동")
-            .email("niniz@gmail.com")
-            .registeredAt(LocalDateTime.now())
-            .build();
+    public Api<Object> me() {
+        var response =  AccountMeResponse.builder()
+                                         .name("홍길동")
+                                         .email("niniz@gmail.com")
+                                         .registeredAt(LocalDateTime.now())
+                                         .build();
+        
+        return Api.ERROR(UserErrorCode.USER_NOT_FOUND, "홍길동 이라는 사용자 없음.");
     }
 }
